@@ -4,9 +4,19 @@
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
 	<package name="lee" extends="struts-default">
-		<action name="login" class="com.will.app.action.LoginAction">
+		<interceptors>
+			<interceptor name="mySimple" class="com.will.app.interceptor.SimpleInterceptor">
+				<param name="name">简单拦截器</param>
+			</interceptor>
+		</interceptors>
+
+		<action name="login" class="com.will.app.action.LoginAction">		
 			<result>/WEB-INF/content/welcome.jsp</result>
 			<result name="error">/WEB-INF/content/error.jsp</result>
+			<interceptor-ref name="defaultStack"/>
+			<interceptor-ref name="mySimple">
+				<param name="name">myfirstinterceptor</param>
+			</interceptor-ref>
 		</action>
 		<action name="*">
 			<result>/WEB-INF/content/{1}.jsp</result>
